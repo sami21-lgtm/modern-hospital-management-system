@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareSync - Hospital Portal & Self-Enrollment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="auth-wrapper" id="auth-section">
+        <div class="glass-auth-card">
+            <div class="brand-logo">
+                <i class="fa-solid fa-heart-pulse"></i>CareSync
+            </div>
+            <p class="auth-subtitle">Hospital Staff Login</p>
+            
+            <form id="login-form">
+                <div class="input-box">
+                    <label for="username">Staff Username</label>
+                    <input type="text" id="username" placeholder="e.g., admin_sami" required>
+                </div>
+                <div class="input-box">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-action-primary">Secure Log In</button>
+            </form>
+        </div>
+
+        <div class="glass-auth-card enrollment-card">
+            <div class="brand-logo" style="color: #10b981;">
+                <i class="fa-solid fa-file-medical"></i>Self Enroll
+            </div>
+            <p class="auth-subtitle">Quick Patient Self-Registration</p>
+            
+            <form id="self-enroll-form">
+                <div class="input-box">
+                    <label for="enroll-name">Your Full Name</label>
+                    <input type="text" id="enroll-name" placeholder="Enter your name" required>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div class="input-box">
+                        <label for="enroll-age">Age</label>
+                        <input type="number" id="enroll-age" placeholder="Age" required>
+                    </div>
+                    <div class="input-box">
+                        <label for="enroll-gender">Gender</label>
+                        <select id="enroll-gender">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-box">
+                    <label for="enroll-dept">Consultation Department</label>
+                    <select id="enroll-dept">
+                        <option value="Cardiology">Cardiology</option>
+                        <option value="Neurology">Neurology</option>
+                        <option value="Pediatrics">Pediatrics</option>
+                        <option value="General Medicine">General Medicine</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-action-primary" style="background: var(--success);">Submit Registration</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="portal-layout hidden" id="portal-section">
+        
+        <aside class="sidebar">
+            <div>
+                <div class="brand-logo" style="font-size: 1.8rem;">
+                    <i class="fa-solid fa-heart-pulse"></i>CareSync
+                </div>
+                <ul class="sidebar-menu">
+                    <li class="active"><a href="#"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+                    <li><a href="#"><i class="fa-solid fa-user-injured"></i> Patients Registry</a></li>
+                    <li><a href="#" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+                </ul>
+            </div>
+            
+            <div class="user-widget">
+                <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=150&h=150" alt="Admin Profile">
+                <div>
+                    <h4 id="admin-display-name">Admin</h4>
+                    <p>Clinical Supervisor</p>
+                </div>
+            </div>
+        </aside>
+
+        <main class="workspace">
+            <div class="ws-header">
+                <div>
+                    <h2>Clinical Dashboard</h2>
+                    <p style="color: #cbd5e1; font-size: 0.85rem;">System status: Real-time Cloud Sync Active</p>
+                </div>
+                <div class="search-container">
+                    <i class="fa-solid fa-magnifying-glass" style="color: #cbd5e1;"></i>
+                    <input type="text" id="patient-search" placeholder="Search patient, ID, dept...">
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon" style="color: #3b82f6;"><i class="fa-solid fa-hospital-user"></i></div>
+                    <div class="stat-info">
+                        <h3 id="stat-total-patients">0</h3>
+                        <p>Total Under Care</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="color: #10b981;"><i class="fa-solid fa-user-doctor"></i></div>
+                    <div class="stat-info">
+                        <h3>24</h3>
+                        <p>Doctors Active</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="color: #ef4444;"><i class="fa-solid fa-bed"></i></div>
+                    <div class="stat-info">
+                        <h3 id="stat-available-beds">30</h3>
+                        <p>Available Beds</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="portal-grid">
+                
+                <div class="glass-card">
+                    <h3 id="form-title"><i class="fa-solid fa-user-plus"></i> Admin Admission</h3>
+                    <form id="patient-crud-form">
+                        <input type="hidden" id="edit-patient-id" value="">
+                        <div class="input-box">
+                            <label for="patient-name">Patient Name</label>
+                            <input type="text" id="patient-name" required placeholder="John Doe">
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                            <div class="input-box">
+                                <label for="patient-age">Age</label>
+                                <input type="number" id="patient-age" required placeholder="32">
+                            </div>
+                            <div class="input-box">
+                                <label for="patient-gender">Gender</label>
+                                <select id="patient-gender">
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="input-box">
+                            <label for="patient-dept">Department</label>
+                            <select id="patient-dept">
+                                <option value="Cardiology">Cardiology</option>
+                                <option value="Neurology">Neurology</option>
+                                <option value="Pediatrics">Pediatrics</option>
+                                <option value="General Medicine">General Medicine</option>
+                                <option value="ICU">ICU</option>
+                            </select>
+                        </div>
+                        <button type="submit" id="form-submit-btn" class="btn-action-primary" style="margin-top: 0.5rem;">Admit Patient</button>
+                        <button type="button" id="cancel-edit-btn" class="btn-action-primary hidden" style="background: rgba(255,255,255,0.15); margin-top: 0.5rem;" onclick="resetFormState()">Cancel Edit</button>
+                    </form>
+                </div>
+
+                <div class="glass-card" style="overflow: hidden;">
+                    <h3 style="justify-content: space-between;">
+                        <span><i class="fa-solid fa-address-book"></i> Active Patient Registry</span>
+                        <span style="font-size: 0.8rem; background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 20px;" id="record-count">Records: 0</span>
+                    </h3>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Age</th>
+                                    <th>Gender</th>
+                                    <th>Department</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="registry-table-body">
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
