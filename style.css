@@ -21,7 +21,7 @@ body {
     height: 100vh;
    
     background: linear-gradient(rgba(15, 23, 42, 0.82), rgba(15, 23, 42, 0.88)), 
-                url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=1920') no-repeat center center/cover;
+                url('hospital.jpg') no-repeat center center/cover;
     display: flex;
     justify-content: center;
     align-items: center;
